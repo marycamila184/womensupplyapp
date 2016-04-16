@@ -2,10 +2,12 @@ package com.up.mary.womensupplyapp.model.empreendedor;
 
 import com.up.mary.womensupplyapp.model.fornecedor.Fornecedor;
 
+import java.io.Serializable;
+
 /**
  * Created by Avell B155 MAX on 16/04/2016.
  */
-public class Empreendedor {
+public class Empreendedor implements Serializable {
 
     private int id;
     private String nomeEmpresa;

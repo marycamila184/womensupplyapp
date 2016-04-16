@@ -4,17 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import com.facebook.FacebookSdk;
-import com.facebook.login.widget.LoginButton;
-import com.firebase.client.Firebase;
 import com.up.mary.womensupplyapp.R;
+import com.up.mary.womensupplyapp.model.empreendedor.Empreendedor;
+import com.up.mary.womensupplyapp.model.fornecedor.Fornecedor;
 
 /**
  * Created by Avell B155 MAX on 16/04/2016.
@@ -27,31 +24,42 @@ public class FragmentEscolha extends Fragment{
     private Button fornecedor;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_escolha, container, false);
 
+        //Caso o usuario escolha empreendedor
         empreendedor = (Button) rootView.findViewById(R.id.empreendedor);
         empreendedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FragmentEmpreendedor empreendedorFragment = new FragmentEmpreendedor();
-                fragmentTransaction.add(R.id.frame, empreendedorFragment);
+                FragmentLogin loginFragment = new FragmentLogin();
+                //Passo o tipo de usuario a ser inserido
+                Bundle bundles = new Bundle();
+                bundles.putSerializable("escolha", "empreendedor");
+                loginFragment.setArguments(bundles);
+                fragmentTransaction.replace(R.id.frame, loginFragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
 
+        //Caso o usuario escolha fornecedor
         fornecedor = (Button) rootView.findViewById(R.id.fornecedor);
-        empreendedor.setOnClickListener(new View.OnClickListener() {
+        fornecedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FragmentFornecedor fragmentFornecedor = new FragmentFornecedor();
-                fragmentTransaction.add(R.id.frame, fragmentFornecedor);
+                FragmentLogin loginFragment = new FragmentLogin();
+                //Passo o tipo de usuario a ser inserido
+                Bundle bundles = new Bundle();
+                bundles.putSerializable("escolha", "fornecedor");
+                loginFragment.setArguments(bundles);
+                fragmentTransaction.replace(R.id.frame, loginFragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

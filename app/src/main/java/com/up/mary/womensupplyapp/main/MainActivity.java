@@ -23,9 +23,9 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+        //Opção para futuramente utilizar
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +35,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        //Inicio com o Fragment de Escolha
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentEscolha escolhaFragment = new FragmentEscolha();

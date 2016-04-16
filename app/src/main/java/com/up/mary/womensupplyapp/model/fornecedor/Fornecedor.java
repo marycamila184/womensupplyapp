@@ -1,9 +1,11 @@
 package com.up.mary.womensupplyapp.model.fornecedor;
 
+import java.io.Serializable;
+
 /**
  * Created by Avell B155 MAX on 16/04/2016.
  */
-public class Fornecedor {
+public class Fornecedor implements Serializable {
 
     private int id;
     private String nomeEmpresa;

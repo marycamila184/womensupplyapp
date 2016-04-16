@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -37,6 +39,8 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.up.mary.womensupplyapp.R;
 import com.up.mary.womensupplyapp.main.MainActivity;
+import com.up.mary.womensupplyapp.model.empreendedor.Empreendedor;
+import com.up.mary.womensupplyapp.model.fornecedor.Fornecedor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,34 +53,22 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
     private TextView mLoggedInStatusTextView;
-
     private ProgressDialog mAuthProgressDialog;
-
     private Firebase mFirebaseRef;
-
     private AuthData mAuthData;
-
     private Firebase.AuthStateListener mAuthStateListener;
-
     private LoginButton mFacebookLoginButton;
     private CallbackManager mFacebookCallbackManager;
     private AccessTokenTracker mFacebookAccessTokenTracker;
-
     private GoogleApiClient mGoogleApiClient;
-
     private boolean mGoogleIntentInProgress;
-
     private boolean mGoogleLoginClicked;
-    private LinearLayout linearLayout;
-    private View rootView;
-
-
     private ConnectionResult mGoogleConnectionResult;
-
     private SignInButton mGoogleLoginButton;
 
+    private LinearLayout linearLayout;
+    private View rootView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,10 +82,10 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
 
         FacebookSdk.sdkInitialize(getContext());
         Firebase.setAndroidContext(getContext());
+
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-
-
+        //Começo o processo de autenticação
         mFacebookCallbackManager = CallbackManager.Factory.create();
         mFacebookLoginButton = (LoginButton) rootView.findViewById(R.id.login_with_facebook);
         mFacebookAccessTokenTracker = new AccessTokenTracker() {
@@ -120,23 +112,21 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
                 }
             }
         });
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
-                .addConnectionCallbacks(this)
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext()).addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-
-
         mLoggedInStatusTextView = (TextView) rootView.findViewById(R.id.login_status);
-
 
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
 
+        //Mostro o loading para o usuario
         mAuthProgressDialog = new ProgressDialog(getActivity());
         mAuthProgressDialog.setTitle("Carregando");
-        mAuthProgressDialog.setMessage("Autenticando...");
+        mAuthProgressDialog.setMessage("Entrando ...");
         mAuthProgressDialog.setCancelable(false);
         mAuthProgressDialog.show();
 
@@ -149,26 +139,14 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         };
 
         mFirebaseRef.addAuthStateListener(mAuthStateListener);
-
         return rootView;
-    }
-
-    private void authWithFirebase(final String provider, Map<String, String> options) {
-        if (options.containsKey("error")) {
-            showErrorDialog(options.get("error"));
-        } else {
-            mAuthProgressDialog.show();
-            mFirebaseRef.authWithOAuthToken(provider, options.get("oauth_token"), new AuthResultHandler(provider));
-        }
     }
 
     private void setAuthenticatedUser(AuthData authData) {
         if (authData != null) {
-            /* Hide all the login buttons */
             mFacebookLoginButton.setVisibility(View.GONE);
             mGoogleLoginButton.setVisibility(View.GONE);
             mLoggedInStatusTextView.setVisibility(View.VISIBLE);
-            /* show a provider specific status text */
             String name = null;
             if (authData.getProvider().equals("facebook")
                     || authData.getProvider().equals("google")) {
@@ -312,9 +290,43 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
                                     + personGooglePlusProfile + ", email: " + email
                                     + ", Image: " + personPhotoUrl);
 
+                            Bundle bundle = getArguments();
+                            String tipoUsuario = bundle.getSerializable("escolha").toString();
+
+                            if(("empreendedor").equals(tipoUsuario)){
+                                Empreendedor empreendedor = new Empreendedor();
+                                empreendedor.setNomeResponsavel(personName);
+                                empreendedor.setEmailResponsavel(email);
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                FragmentEmpreendedor fragmentEmpreendedor = new FragmentEmpreendedor();
+                                //Passo os dados do usuario
+                                Bundle bundles = new Bundle();
+                                bundles.putSerializable("empreendedor", empreendedor);
+                                fragmentEmpreendedor.setArguments(bundles);
+                                fragmentTransaction.replace(R.id.frame, fragmentEmpreendedor);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }else{
+                                Fornecedor fornecedor = new Fornecedor();
+                                fornecedor.setNomeResponsavel(personName);
+                                fornecedor.setEmailResponsavel(email);
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                FragmentFornecedor fragmentFornecedor = new FragmentFornecedor();
+                                //Passo os dados do usuario
+                                Bundle bundles = new Bundle();
+                                bundles.putSerializable("fornecedor", fornecedor);
+                                fragmentFornecedor.setArguments(bundles);
+                                fragmentTransaction.replace(R.id.frame, fragmentFornecedor);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(),
-                                    "NULO =( ", Toast.LENGTH_LONG).show();
+                                    "NULO = ", Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -354,6 +366,7 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         mFirebaseRef.removeAuthStateListener(mAuthStateListener);
     }
 
+    //Caso o usuario queira sair e deslogar do aplicativo
     private void logout() {
         if (this.mAuthData != null) {
             mFirebaseRef.unauth();

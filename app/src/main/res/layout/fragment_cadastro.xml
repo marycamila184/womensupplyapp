@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Informações Empresariais"
+        android:id="@+id/text_info"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome da empresa:"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/label_nome"
+            android:padding="8dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nome"
+            android:inputType="textPersonName"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ramo:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_ramo"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ramo"
+            android:inputType="text"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CNPJ: "
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_cnpj" />
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cnpj"
+            android:inputType="text"
+            android:onClick="chamaDatePicker"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Endereço:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_endereco"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/endereco"
+            android:textColor="@color/colorPrimary"
+            android:inputType="text"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bairro:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_bairro"/>
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bairro"
+            android:inputType="text"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cidade:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_cidade"/>
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cidade"
+            android:inputType="text"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UF:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_UF"/>
+        <Spinner
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_UF"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_telefone"/>
+        <EditText
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:inputType="phone"
+            android:id="@+id/telefone"
+            android:ems="10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:id="@+id/label_email"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/label_email"
+            android:layout_toRightOf="@+id/label_email"
+            android:padding="8dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email"
+            android:ems="10"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Informações do responsável"
+        android:id="@+id/text_info_resp"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/label_email"
+            android:layout_toRightOf="@+id/label_email"
+            android:padding="8dp"
+            android:inputType="textPersonName"
+            android:id="@+id/nome_responsavel"
+            android:ems="10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email:"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/label_email"
+            android:layout_toRightOf="@+id/label_email"
+            android:padding="8dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email_responsavel"
+            android:ems="10"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_margin="18dp"
+        android:id="@+id/cadastro"
+        android:text="Próximo"/>
+</LinearLayout>
