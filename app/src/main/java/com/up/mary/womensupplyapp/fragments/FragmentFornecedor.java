@@ -15,6 +15,9 @@ import com.firebase.client.Firebase;
 import com.up.mary.womensupplyapp.R;
 import com.up.mary.womensupplyapp.model.empreendedor.Empreendedor;
 import com.up.mary.womensupplyapp.model.fornecedor.Fornecedor;
+import com.up.mary.womensupplyapp.model.fornecedor.Produto;
+
+import java.util.ArrayList;
 
 /**
  * Created by Avell B155 MAX on 16/04/2016.
@@ -75,6 +78,8 @@ public class FragmentFornecedor  extends Fragment{
                 usuario.setTelefone(telefone.getText().toString());
                 usuario.setRanking(5);
 
+                usuario.setListaProdutos(new ArrayList<Produto>());
+
                 //Indo para a tela de produtos
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -84,7 +89,8 @@ public class FragmentFornecedor  extends Fragment{
                 bundles.putSerializable("fornecedor", usuario);
                 lista.setArguments(bundles);
 
-                fragmentTransaction.add(R.id.frame, lista);
+                fragmentTransaction.replace(R.id.frame, lista);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

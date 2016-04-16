@@ -45,8 +45,8 @@ public class FragmentEmpreendedor extends Fragment{
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_cadastro, container, false);
-        Bundle bundle = getArguments();
 
+        Bundle bundle = getArguments();
         usuario = (Empreendedor)bundle.getSerializable("empreendedor");
 
         nomeResponsavel = (EditText) rootView.findViewById(R.id.nome_responsavel);
@@ -86,8 +86,9 @@ public class FragmentEmpreendedor extends Fragment{
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FragmentEmpreendedor empreendedorFragment = new FragmentEmpreendedor();
-                fragmentTransaction.add(R.id.frame, empreendedorFragment);
+                FragmentListaBusca fragmentListaBusca= new FragmentListaBusca();
+                fragmentTransaction.replace(R.id.frame, fragmentListaBusca);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

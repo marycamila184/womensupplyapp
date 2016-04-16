@@ -31,7 +31,7 @@ public class FragmentAddProduto extends Fragment{
 
         rootView = inflater.inflate(R.layout.fragment_cadastro_produto, container, false);
 
-        cadastrar = (Button) rootView.findViewById(R.id.addProduto);
+        cadastrar = (Button) rootView.findViewById(R.id.cadastro);
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +44,12 @@ public class FragmentAddProduto extends Fragment{
 
                 Produto produto=new Produto();
                 produto.setNomeProduto(nomeProduto.getText().toString());
-                produto.setPreco(Float.parseFloat(preco.getText().toString()));
+                String precoString = preco.getText().toString();
+                if(precoString == null || precoString.equals("") ){
+                    produto.setPreco((float) 0.0);
+                }else {
+                    produto.setPreco(Float.parseFloat(preco.getText().toString()));
+                }
 
                 fornecedor.getListaProdutos().add(produto);
 
