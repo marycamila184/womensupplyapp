@@ -37,7 +37,7 @@ public class FragmentEmpreendedor extends Fragment{
     private EditText telefone;
     private EditText email;
 
-    private Empreendedor usuario;
+    private Empreendedor usuario = new Empreendedor();
 
 
     @Override
@@ -46,6 +46,7 @@ public class FragmentEmpreendedor extends Fragment{
 
         rootView = inflater.inflate(R.layout.fragment_cadastro, container, false);
         Bundle bundle = getArguments();
+
         usuario = (Empreendedor)bundle.getSerializable("empreendedor");
 
         nomeResponsavel = (EditText) rootView.findViewById(R.id.nome_responsavel);
@@ -75,18 +76,19 @@ public class FragmentEmpreendedor extends Fragment{
                 usuario.setBairro(bairro.getText().toString());
                 usuario.setCidade(cidade.getText().toString());
                 usuario.setTelefone(telefone.getText().toString());
+                usuario.setRanking(5);
 
                 //Chamando o firebase
                 Firebase mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
-                mFirebaseRef.child("Empreendedor").setValue(usuario);
+                mFirebaseRef.child("empreendedores").push().setValue(usuario);
 
                 //Chamar o firebase
 
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                FragmentEmpreendedor empreendedorFragment = new FragmentEmpreendedor();
-//                fragmentTransaction.add(R.id.frame, empreendedorFragment);
-//                fragmentTransaction.commit();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentEmpreendedor empreendedorFragment = new FragmentEmpreendedor();
+                fragmentTransaction.add(R.id.frame, empreendedorFragment);
+                fragmentTransaction.commit();
             }
         });
 

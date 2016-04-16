@@ -1,6 +1,7 @@
 package com.up.mary.womensupplyapp.model.fornecedor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Avell B155 MAX on 16/04/2016.
@@ -21,6 +22,7 @@ public class Fornecedor implements Serializable {
     private String nomeResponsavel;
     private String emailResponsavel;
 
+    private List<Produto> listaProdutos;
 
     public int getId() {
         return id;
@@ -137,6 +139,16 @@ public class Fornecedor implements Serializable {
 
     public Fornecedor setRanking(int ranking) {
         this.ranking = ranking;
+        return this;
+    }
+
+
+    public List<Produto> getListaProdutos() {
+        return listaProdutos;
+    }
+
+    public Fornecedor setListaProdutos(List<Produto> listaProdutos) {
+        this.listaProdutos = listaProdutos;
         return this;
     }
 }

@@ -53,7 +53,6 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private TextView mLoggedInStatusTextView;
     private ProgressDialog mAuthProgressDialog;
     private Firebase mFirebaseRef;
     private AuthData mAuthData;
@@ -119,8 +118,6 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-        mLoggedInStatusTextView = (TextView) rootView.findViewById(R.id.login_status);
-
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
 
         //Mostro o loading para o usuario
@@ -146,21 +143,17 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         if (authData != null) {
             mFacebookLoginButton.setVisibility(View.GONE);
             mGoogleLoginButton.setVisibility(View.GONE);
-            mLoggedInStatusTextView.setVisibility(View.VISIBLE);
             String name = null;
             if (authData.getProvider().equals("facebook")
                     || authData.getProvider().equals("google")) {
                 name = (String) authData.getProviderData().get("displayName");
+                name = (String) authData.getProviderData().get("displayName");
             } else {
                 Log.e(TAG, "Provedor de autenticação invalido: " + authData.getProvider());
-            }
-            if (name != null) {
-                mLoggedInStatusTextView.setText("Logado como " + name + " (" + authData.getProvider() + ")");
             }
         } else {
             mFacebookLoginButton.setVisibility(View.VISIBLE);
             mGoogleLoginButton.setVisibility(View.VISIBLE);
-            mLoggedInStatusTextView.setVisibility(View.GONE);
         }
         this.mAuthData = authData;
         getActivity().supportInvalidateOptionsMenu();
@@ -363,6 +356,7 @@ public class FragmentLogin extends Fragment implements GoogleApiClient.Connectio
         if (mFacebookAccessTokenTracker != null) {
             mFacebookAccessTokenTracker.stopTracking();
         }
+        logout();
         mFirebaseRef.removeAuthStateListener(mAuthStateListener);
     }
 

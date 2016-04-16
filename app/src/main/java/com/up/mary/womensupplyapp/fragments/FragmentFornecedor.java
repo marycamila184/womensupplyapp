@@ -36,7 +36,7 @@ public class FragmentFornecedor  extends Fragment{
     private EditText telefone;
     private EditText email;
 
-    private Fornecedor usuario;
+    private Fornecedor usuario = new Fornecedor();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,16 +73,19 @@ public class FragmentFornecedor  extends Fragment{
                 usuario.setBairro(bairro.getText().toString());
                 usuario.setCidade(cidade.getText().toString());
                 usuario.setTelefone(telefone.getText().toString());
+                usuario.setRanking(5);
 
-                //Chamando o firebase
-                Firebase mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
-                mFirebaseRef.child("Fornecedor").setValue(usuario);
+                //Indo para a tela de produtos
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentListProduto lista = new FragmentListProduto();
 
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                FragmentEmpreendedor empreendedorFragment = new FragmentEmpreendedor();
-//                fragmentTransaction.add(R.id.frame, empreendedorFragment);
-//                fragmentTransaction.commit();
+                Bundle bundles = new Bundle();
+                bundles.putSerializable("fornecedor", usuario);
+                lista.setArguments(bundles);
+
+                fragmentTransaction.add(R.id.frame, lista);
+                fragmentTransaction.commit();
             }
         });
 
